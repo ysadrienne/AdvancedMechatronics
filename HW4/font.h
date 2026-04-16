@@ -1,12 +1,8 @@
 #ifndef FONT_H__
 #define FONT_H__
 
-void drawChar(int x_pos, int y_pos, char character) {
-    
-}
-void drawString(...) {
-    
-}
+void drawChar(int x_pos, int y_pos, char character);
+void drawString (int x, int y, char *string);
 
 // lookup table for all of the ascii characters
 static const char ASCII[96][5] = {

@@ -4,6 +4,7 @@
 #include "ssd1306.h"
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"
+#include "font.h"
 
 unsigned char SSD1306_ADDRESS = 0b0111100; // 7bit i2c address
 unsigned char ssd1306_buffer[513]; // 128x32/8. Every bit is a pixel except first byte
@@ -99,4 +100,24 @@ void ssd1306_drawPixel(unsigned char x, unsigned char y, unsigned char color) {
 void ssd1306_clear() {
     memset(ssd1306_buffer, 0, 512); // make every bit a 0, memset in string.h
     ssd1306_buffer[0] = 0x40; // first byte is part of command
+}
+
+void drawChar(int x_pos, int y_pos, char character) {
+    for (int i = 0; i < 5; i++) {
+        char col = ASCII[character - 0x20][i];
+        for (int j = 0; j < 8; j++) {
+            char row = ASCII[character - 0x20][i];
+            int bit = (col >> j) & 0b1;
+            ssd1306_drawPixel(x_pos + i, y_pos + j, bit);
+        } 
+    }
+}
+
+void drawString(int x, int y, char *string) {
+    int k = 0;
+    while (string[k] != '\0') {
+        drawChar(x+(k*5), y, string[k]);
+        k++;
+    }
+    
 }

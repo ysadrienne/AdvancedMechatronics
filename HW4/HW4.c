@@ -13,7 +13,8 @@
 
 bool heartbeat_callback(struct repeating_timer *t);
 void picoLEDInit();
-
+void drawChar(int x_pos, int y_pos, char character);
+void drawString(int x, int y, char *string);
 
 int main()
 {
@@ -37,15 +38,36 @@ int main()
     ssd1306_update();
     
     while (true) {
-        ssd1306_drawPixel(10, 20, 1);
+        // ssd1306_drawPixel(10, 20, 1);
+        // ssd1306_update();
+        // sleep_ms(1000);
+        // ssd1306_drawPixel(10, 20, 0);
+        // ssd1306_update();
+        // sleep_ms(1000);
+        absolute_time_t t1, t2;
+        t1 = get_absolute_time();
+        ssd1306_clear();
+        char message[30];
+        sprintf(message, "Hello 123456789123456789");
+        drawString(0, 0, message);
+        sprintf(message, "Row 2 123456789123456789");
+        drawString(0, 8, message);
+        sprintf(message, "Row 3 123456789123456789");
+        drawString(0, 16, message);
+        sprintf(message, "Row 4 123456789123456789");
+        drawString(0, 24, message);
         ssd1306_update();
-        sleep_ms(1000);
-        ssd1306_drawPixel(10, 20, 0);
+
+        t2 = get_absolute_time();
+        uint64_t tdiff;
+        tdiff = to_us_since_boot(t2) - to_us_since_boot(t1);
+        char speed[30];
+        sprintf(speed, "FPS: %6.3f ", 1.0/(tdiff/1000000.0));
+        drawString(0, 24, speed);
         ssd1306_update();
         sleep_ms(1000);
     }
 }
-
 
 void picoLEDInit () {
     gpio_init(LED_PICO);
