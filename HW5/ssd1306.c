@@ -1,6 +1,7 @@
 // based on adafruit and sparkfun libraries
 
 #include <string.h> // for memset
+#include <stdlib.h>
 #include "ssd1306.h"
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"
@@ -118,5 +119,52 @@ void drawString(int x, int y, char *string) {
     while (string[k] != '\0') {
         drawChar(x+(k*5), y, string[k]);
         k++;
+    }
+}
+
+void ssd1306_draw_line(int x0, int y0, int x_end, int y_end) {
+    int dx = abs(x_end - x0);
+    int xslope;
+    if (x0 == x_end) {
+        xslope = 0;
+    } 
+    else if (x0 < x_end) {
+        xslope = 1;
+    } 
+    else {
+        xslope = -1;
+    }
+
+    int dy = -abs(y_end - y0);
+    int yslope;
+    if (y0 == y_end) {
+        yslope = 0;
+    } 
+    else if (y0 < y_end) {
+        yslope = 1;
+    } 
+    else {
+        yslope = -1;
+    }
+    
+    int err = dx + dy;
+    int e2;
+
+    while (true) {
+        ssd1306_drawPixel(x0, y0, 1); 
+
+        if (x0 == x_end && y0 == y_end) {
+            break; 
+        }
+        
+        e2 = 2 * err;
+        if (e2 >= dy) { 
+            err += dy; 
+            x0 += xslope; 
+        }
+        if (e2 <= dx) { 
+            err += dx; 
+            y0 += yslope; 
+        }
     }
 }

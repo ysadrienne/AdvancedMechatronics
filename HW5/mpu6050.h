@@ -1,5 +1,5 @@
-#ifndef MPU6050_H__
-#define MPU6050_H__
+#ifndef MPU6050_H_
+#define MPU6050_H_
 
 #include "pico/stdlib.h"
 
@@ -38,5 +38,6 @@ void setPin(unsigned char address, unsigned char reg, unsigned char value);
 unsigned char readPin(unsigned char address, unsigned char reg);
 void initMPU();
 void readMPU(float *ax, float *ay, float *az, float *gx, float *gy, float *gz, float *temp);
+void ssd1306_draw_line(int x0, int y0, int x_end, int y_end);
 
 #endif

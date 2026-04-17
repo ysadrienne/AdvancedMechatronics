@@ -25,8 +25,12 @@ int main()
     add_repeating_timer_ms(1000, heartbeat_callback, NULL, &timer);
 
     // unsigned char who = readPin(MPU6050_ADDR, WHO_AM_I);
-    initMPU();
+    
+    int x0 = 64;
+    int y0 = 16;
+    int scale = 30;
 
+    initMPU();
     float ax, ay, az, gx, gy, gz, temp;
 
     while (true) {   
@@ -35,8 +39,16 @@ int main()
         sleep_ms(1000);
         */
         readMPU(&ax, &ay, &az, &gx, &gy, &gz, &temp);
-        printf("ax: %.2f, ay: %.2f, az: %.2f\r\n", ax, ay, az);
-        printf("gx: %.2f, gy: %.2f, gz: %.2f, temp: %.2f\r\n", gx, gy, gz, temp);
-        sleep_ms(1000);
+        int x_end = x0 - (int)(scale * ax);
+        int y_end = y0 + (int)(scale * ay);
+
+        ssd1306_clear();
+        ssd1306_draw_line(x0, y0, x_end, y_end); 
+        ssd1306_update();
+
+        sleep_ms(20);
+        // printf("ax: %.2f, ay: %.2f, az: %.2f\r\n", ax, ay, az);
+        // printf("gx: %.2f, gy: %.2f, gz: %.2f, temp: %.2f\r\n", gx, gy, gz, temp);
+        // sleep_ms(10);
     }
 }
