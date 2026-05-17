@@ -1,61 +1,31 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
-
-#define SCK_PIN 16
-#define DT_PIN 17
-
-void init_gpios(void);
-int32_t read_hx711(void);
+#include "hx711.h"
 
 int main()
 {
     stdio_init_all();
-    init_gpios();
+
+    init_hx711();
+
+    int i = 0;
+    uint64_t last_t = 0;
 
     while (true) {
-        int32_t force_val = read_hx711();
-        printf("Raw Force Value: %d\n", force_val);
-        sleep_ms(50);
-    }
-}
-
-void init_gpios() {
-    gpio_init(SCK_PIN);
-    gpio_set_dir(SCK_PIN, GPIO_OUT);
-    gpio_put(SCK_PIN, false);
-    gpio_init(DT_PIN);
-    gpio_set_dir(DT_PIN, GPIO_IN);
-}
-
-int32_t read_hx711(void) {
-    uint32_t raw = 0;
-
-    while (gpio_get(DT_PIN)) {
-        tight_loop_contents(); 
-    }
-
-    for (int i = 0; i < 24; i++) {
-        gpio_put(SCK_PIN, true);
-        sleep_us(1);
-
-        raw = raw << 1;
-        if (gpio_get(DT_PIN)) {
-            raw |= 1;
+        char m[100];
+        int v[1000];
+        int num = 0;
+        uint64_t t[1000];
+        scanf("%d", &num);
+        int avg = 838000;
+        for (i = 0; i < num; i++){
+            int val = read_hx711();
+            avg = val * 0.1 + avg * 0.9;
+            v[i] = avg;
+            t[i] = to_ms_since_boot(get_absolute_time());
         }
-
-        gpio_put(SCK_PIN, false);
-        sleep_us(1);
+        for (i = 0; i < num; i++){
+            printf("%d %llu %d\n", i, t[i], v[i]);
+        }
     }
-
-    gpio_put(SCK_PIN, true);
-    sleep_us(1);
-    gpio_put(SCK_PIN, false);
-    sleep_us(1);
-
-    int32_t signed_raw = (int32_t)raw;
-    if (signed_raw & 0x800000) {
-        signed_raw |= 0xFF000000;
-    }
-
-    return signed_raw;
 }
