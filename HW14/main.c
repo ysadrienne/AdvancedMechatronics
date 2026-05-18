@@ -17,7 +17,7 @@ int main()
         int num = 0;
         uint64_t t[1000];
         scanf("%d", &num);
-        int avg = 838000;
+        int avg = 875000;
         for (i = 0; i < num; i++){
             int val = read_hx711();
             avg = val * 0.1 + avg * 0.9;
