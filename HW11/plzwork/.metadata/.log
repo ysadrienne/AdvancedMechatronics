@@ -1,0 +1,26 @@
+!SESSION 2026-05-18 14:41:00.340 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=aarch64, WS=cocoa, NL=en_US
+Framework arguments:  -keyring /Users/adrienne/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch aarch64 -keyring /Users/adrienne/.eclipse_keyring
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-05-18 14:41:16.826
+!MESSAGE Log4j2 initialized with config file /Users/adrienne/STM32Cube/HW11/plzwork/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-18 14:41:18.859
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2026-05-19 10:15:20.775 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=aarch64, WS=cocoa, NL=en_US
+Framework arguments:  -keyring /Users/adrienne/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch aarch64 -keyring /Users/adrienne/.eclipse_keyring
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-05-19 10:15:38.618
+!MESSAGE Log4j2 initialized with config file /Users/adrienne/STM32Cube/HW11/plzwork/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-19 10:15:41.592
+!MESSAGE Started RMI Server, listening on port 41337
